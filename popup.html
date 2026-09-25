@@ -1,10 +1,41 @@
 <!doctype html>
-<html>
-  <body style="width:190px;padding:12px;font:13px system-ui;margin:0">
-    <label style="display:flex;gap:8px;align-items:center;cursor:pointer">
-      <input type="checkbox" id="on">
-      Enable autocorrect
-    </label>
-    <script src="popup.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { width: 220px; padding: 12px; margin: 0; font: 13px system-ui; }
+    .row { display: flex; align-items: center; gap: 8px; padding: 6px 0; }
+    .row label { cursor: pointer; }
+    button {
+      font: inherit;
+      width: 100%;
+      padding: 6px 8px;
+      cursor: pointer;
+      text-align: left;
+    }
+    input[type="checkbox"]:focus-visible,
+    button:focus-visible {
+      outline: 2px solid #1a73e8;
+      outline-offset: 2px;
+    }
+    hr { border: none; border-top: 1px solid #eee; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <input type="checkbox" id="enabled">
+    <label for="enabled">Enable autocorrect</label>
+  </div>
+
+  <div class="row">
+    <input type="checkbox" id="announce">
+    <label for="announce">Announce corrections</label>
+  </div>
+
+  <hr>
+
+  <button type="button" id="manage">Manage ignored words…</button>
+
+  <script src="popup.js"></script>
+</body>
 </html>

@@ -43,9 +43,15 @@
   }
 
   // Say something to assistive tech. Screen readers only; sighted users see nothing.
+    let announceEnabled = true;
+  chrome.storage.sync.get({ announce: true }, (v) => { announceEnabled = v.announce; });
+  chrome.storage.onChanged.addListener((c, area) => {
+    if (area === "sync" && c.announce) announceEnabled = c.announce.newValue;
+  });
+
   function announce(message) {
+    if (!announceEnabled) return; // user turned announcements off
     const region = getLiveRegion();
-    // Clearing first forces a fresh announcement if the text is identical to last time.
     region.textContent = "";
     requestAnimationFrame(() => { region.textContent = message; });
   }
