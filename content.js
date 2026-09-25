@@ -24,6 +24,32 @@
   document.addEventListener("compositionstart", () => { composing = true; }, true);
   document.addEventListener("compositionend",   () => { composing = false; }, true);
 
+  // --- Announcement -------------------------------------------------------
+  // A hidden live region. Screen readers watch this element and speak any text
+  // we put in it. Sighted users never see it. Created once per page.
+  let liveRegion = null;
+
+  function getLiveRegion() {
+    if (liveRegion && liveRegion.isConnected) return liveRegion;
+    liveRegion = document.createElement("div");
+    liveRegion.setAttribute("aria-live", "polite"); // wait for a pause before speaking
+    liveRegion.setAttribute("aria-atomic", "true"); // read the whole thing, not just the diff
+    // Visually hidden, but still in the accessibility tree.
+    liveRegion.style.cssText =
+      "position:absolute;width:1px;height:1px;padding:0;margin:-1px;" +
+      "overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;";
+    document.body.appendChild(liveRegion);
+    return liveRegion;
+  }
+
+  // Say something to assistive tech. Screen readers only; sighted users see nothing.
+  function announce(message) {
+    const region = getLiveRegion();
+    // Clearing first forces a fresh announcement if the text is identical to last time.
+    region.textContent = "";
+    requestAnimationFrame(() => { region.textContent = message; });
+  }
+
   // Only textareas and safe input types may be corrected.
   function isSafeField(el) {
     if (el instanceof HTMLTextAreaElement) return true;
@@ -96,6 +122,9 @@
         replaceValue(el, el.value.slice(0, start) + fixed + el.value.slice(end));
       }
       el.setSelectionRange(caret, caret); // put the caret back where it belongs
+
+      // Tell screen readers what happened. Silent for everyone else.
+      announce(`Corrected ${word} to ${fixed}`);
     } finally {
       busy = false;
     }
