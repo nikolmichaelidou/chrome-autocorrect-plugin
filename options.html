@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AutoCorrect — Settings</title>
+  <style>
+    body { font: 14px system-ui; max-width: 480px; margin: 32px auto; padding: 0 16px; }
+    h1 { font-size: 18px; }
+    h2 { font-size: 15px; margin-top: 28px; }
+    ul { list-style: none; padding: 0; }
+    li { display: flex; justify-content: space-between; align-items: center;
+         padding: 8px 0; border-bottom: 1px solid #eee; }
+    button { font: inherit; padding: 4px 10px; cursor: pointer; }
+    button:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
+    input[type="checkbox"]:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
+    .empty { color: #666; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>AutoCorrect</h1>
+
+  <h2>General</h2>
+  <label style="display:flex;gap:8px;align-items:center;padding:8px 0">
+    <input type="checkbox" id="enabled">
+    Enable autocorrect
+  </label>
+  <label style="display:flex;gap:8px;align-items:center;padding:8px 0">
+    <input type="checkbox" id="announce">
+    Announce corrections to screen readers
+  </label>
+
+  <h2>Ignored words</h2>
+  <p>Words you've told AutoCorrect to leave alone. Remove one to start correcting it again.</p>
+  <ul id="ignored"></ul>
+
+  <script src="options.js"></script>
+</body>
+</html>

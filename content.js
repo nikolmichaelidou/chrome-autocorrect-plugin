@@ -124,7 +124,7 @@
       el.setSelectionRange(caret, caret); // put the caret back where it belongs
 
       // Tell screen readers what happened. Silent for everyone else.
-      announce(`Corrected ${word} to ${fixed}`);
+      announce(`Corrected ${word} to ${fixed}. Press Control Shift Z to undo.`);
     } finally {
       busy = false;
     }
